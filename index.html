@@ -1,21 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>César Delgado Acevedo · Front-End Developer · Resume</title>
+<meta name="description" content="Resume of César Delgado Acevedo, front-end web developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --paper: #f1f3f9;
+    --card: #ffffff;
+    --ink: #14213d;
+    --ink-soft: #4a5672;
+    --line: #d3d9e8;
+
+    --blue: #2b50e8;    --blue-bg: #e1e7fd;
+    --coral: #f2503f;   --coral-bg: #fde4e0;
+    --teal: #0b9a7e;    --teal-bg: #d8f3ec;
+    --amber: #e59a0b;   --amber-bg: #fdf0d2;
+    --violet: #7b45e6;  --violet-bg: #ece3fd;
+
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --text: "Source Serif 4", Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0e1525;
+      --card: #172038;
+      --ink: #e8ecf7;
+      --ink-soft: #a2add0;
+      --line: #2b3757;
+
+      --blue: #8ea5ff;    --blue-bg: #212e5a;
+      --coral: #ff8a7c;   --coral-bg: #4a2523;
+      --teal: #4fd3b5;    --teal-bg: #153c36;
+      --amber: #ffc457;   --amber-bg: #45350f;
+      --violet: #b394ff;  --violet-bg: #35255e;
+    }
+  }
+
+  /* ---------- Base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--violet);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  .cv { max-width: 1080px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+
+  /* ---------- Header ---------- */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem 3rem;
+    align-items: end;
+    padding-bottom: 2.25rem;
+    position: relative;
+  }
+  .header::after {            /* five-colour bar = the palette of the whole page */
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 8px;
+    border-radius: 8px;
+    background: linear-gradient(90deg,
+      var(--blue) 0 20%, var(--violet) 20% 40%, var(--coral) 40% 60%,
+      var(--amber) 60% 80%, var(--teal) 80% 100%);
+  }
+  .name {
+    font-size: clamp(3rem, 10vw, 6.75rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    animation: enter 0.7s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .name .first  { color: var(--blue); }
+  .name .last-a { color: var(--ink); }
+  .name .last-b { color: var(--coral); }
+  .role {
+    margin-top: 1.25rem;
+    max-width: 36rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .actions { display: flex; flex-direction: column; gap: 0.75rem; }
+  .btn {
+    font: 600 1rem var(--display);
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #0e1525; } }
+  .btn.primary:hover { background: var(--coral); border-color: var(--coral); color: #fff; }
+
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Layout ---------- */
+  .content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    margin-top: 2.5rem;
+  }
+  .side, .main { display: flex; flex-direction: column; }
+  .side { gap: 2.25rem; }
+  .main { gap: 2.75rem; }
+
+  .block h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    padding-left: 0.75rem;
+    border-left: 6px solid var(--c, var(--blue));
+  }
+  .c-blue   { --c: var(--blue); }
+  .c-violet { --c: var(--violet); }
+  .c-coral  { --c: var(--coral); }
+  .c-amber  { --c: var(--amber); }
+  .c-teal   { --c: var(--teal); }
+
+  /* Contact */
+  .contact li { padding: 0.45rem 0; border-bottom: 1px solid var(--line); }
+  .contact li:last-child { border-bottom: 0; }
+  .contact small { display: block; font-family: var(--display); font-size: 0.85rem; color: var(--ink-soft); }
+  .contact a, .contact span { word-break: break-word; }
+
+  /* Skills: one colour per group */
+  .group + .group { margin-top: 1.1rem; }
+  .group h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--ink-soft); font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tags li {
+    font-family: var(--display);
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.2rem 0.7rem;
+    border-radius: 6px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--bd);
+  }
+  .tags.blue   { --bg: var(--blue-bg);   --bd: var(--blue); }
+  .tags.coral  { --bg: var(--coral-bg);  --bd: var(--coral); }
+  .tags.teal   { --bg: var(--teal-bg);   --bd: var(--teal); }
+  .tags.violet { --bg: var(--violet-bg); --bd: var(--violet); }
+
+  /* Languages */
+  .languages li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.3rem 0; }
+  .languages em { color: var(--ink-soft); text-align: right; }
+
+  /* Summary */
+  .summary p { font-size: 1.15rem; max-width: 62ch; }
+
+  /* ---------- Timeline (a real sequence) ---------- */
+  .timeline { padding-left: 1.75rem; border-left: 2px solid var(--line); }
+  .item { position: relative; padding-bottom: 2rem; }
+  .item:last-child { padding-bottom: 0; }
+  .item::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.75rem - 7px);
+    top: 0.4rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid var(--c, var(--blue));
+  }
+  .item h3 { font-size: 1.25rem; font-weight: 800; }
+  .item .where { color: var(--ink-soft); font-style: italic; }
+  .item .date {
+    display: inline-block;
+    margin: 0.4rem 0 0.6rem;
+    padding: 0.05rem 0.65rem;
+    border-radius: 999px;
+    font-family: var(--display);
+    font-size: 0.88rem;
+    font-weight: 500;
+    background: var(--bg, var(--blue-bg));
+    color: var(--ink);
+  }
+  .item ul { list-style: disc; padding-left: 1.1rem; max-width: 62ch; }
+  .item li + li { margin-top: 0.3rem; }
+  .item li::marker { color: var(--c, var(--blue)); }
+  .i-blue   { --c: var(--blue);   --bg: var(--blue-bg); }
+  .i-coral  { --c: var(--coral);  --bg: var(--coral-bg); }
+  .i-amber  { --c: var(--amber);  --bg: var(--amber-bg); }
+  .i-teal   { --c: var(--teal);   --bg: var(--teal-bg); }
+  .i-violet { --c: var(--violet); --bg: var(--violet-bg); }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .project {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 6px solid var(--c);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+  }
+  .project h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.35rem; }
+  .project p { font-size: 0.98rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+  .project .stack { font-family: var(--display); font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+  .project a { color: var(--c); font-weight: 600; font-family: var(--display); }
+
+  /* Certifications */
+  .certs li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .certs li:last-child { border-bottom: 0; }
+  .certs span { color: var(--ink-soft); white-space: nowrap; }
+
+  /* Footer */
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .header { grid-template-columns: 1fr; }
+    .actions { flex-direction: row; flex-wrap: wrap; }
+    .content { grid-template-columns: 1fr; gap: 2.5rem; }
+    .projects { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .name { animation: none; }
+    .btn { transition: none; }
+  }
+
+  /* ---------- Print / Save as PDF ---------- */
+  @media print {
+    :root {
+      --paper: #fff; --card: #fff; --ink: #14213d; --ink-soft: #4a5672; --line: #d3d9e8;
+      --blue: #2b50e8; --blue-bg: #e1e7fd; --coral: #f2503f; --coral-bg: #fde4e0;
+      --teal: #0b9a7e; --teal-bg: #d8f3ec; --amber: #e59a0b; --amber-bg: #fdf0d2;
+      --violet: #7b45e6; --violet-bg: #ece3fd;
+    }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { font-size: 10.5pt; }
+    .actions { display: none; }
+    .cv { padding: 0; }
+    .name { font-size: 42pt; animation: none; }
+    .project, .item { break-inside: avoid; }
+  }
+</style>
 </head>
 <body>
-    <p style="color: purple;">Hola mundo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
-    <p>Cesar Delgado Acevedo</p>
+  <main class="cv">
+
+    <header class="header">
+      <div>
+        <h1 class="name">
+          <span class="first">César</span>
+          <span class="last-a">Delgado</span>
+          <span class="last-b">Acevedo</span>
+        </h1>
+        <p class="role">Front-end developer building fast, accessible and maintainable web interfaces.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="mailto:cesar.delgado@email.com">Email me</a>
+        <button class="btn" type="button" onclick="window.print()">Save as PDF</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- Sidebar -->
+      <aside class="side">
+
+        <section class="block c-blue contact" aria-labelledby="h-contact">
+          <h2 id="h-contact">Contact</h2>
+          <ul>
+            <li><small>Email</small><a href="mailto:cesar.delgado@email.com">cesar.delgado@email.com</a></li>
+            <li><small>Phone</small><a href="tel:+520000000000">+52 000 000 0000</a></li>
+            <li><small>Location</small><span>Mexico · open to remote work</span></li>
+            <li><small>Portfolio</small><a href="https://example.com" target="_blank" rel="noopener">cesardelgado.dev</a></li>
+            <li><small>GitHub</small><a href="https://github.com/" target="_blank" rel="noopener">github.com/cesardelgado</a></li>
+            <li><small>LinkedIn</small><a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/cesardelgado</a></li>
+          </ul>
+        </section>
+
+        <section class="block c-violet" aria-labelledby="h-skills">
+          <h2 id="h-skills">Technical skills</h2>
+          <div class="group">
+            <h3>Languages</h3>
+            <ul class="tags blue"><li>HTML5</li><li>CSS3</li><li>JavaScript (ES6+)</li><li>TypeScript</li></ul>
+          </div>
+          <div class="group">
+            <h3>Frameworks &amp; libraries</h3>
+            <ul class="tags coral"><li>React</li><li>Next.js</li><li>Vue</li><li>Tailwind CSS</li><li>Sass</li></ul>
+          </div>
+          <div class="group">
+            <h3>Tools &amp; testing</h3>
+            <ul class="tags teal"><li>Git</li><li>Vite</li><li>Figma</li><li>Lighthouse</li><li>Jest</li><li>Cypress</li></ul>
+          </div>
+          <div class="group">
+            <h3>Practices</h3>
+            <ul class="tags violet"><li>Accessibility (WCAG)</li><li>Responsive design</li><li>Performance</li><li>Agile / Scrum</li></ul>
+          </div>
+        </section>
+
+        <section class="block c-amber languages" aria-labelledby="h-lang">
+          <h2 id="h-lang">Languages</h2>
+          <ul>
+            <li>Spanish <em>Native</em></li>
+            <li>English <em>Upper-intermediate (B2)</em></li>
+          </ul>
+        </section>
+
+      </aside>
+
+      <!-- Main column -->
+      <div class="main">
+
+        <section class="block c-coral summary" aria-labelledby="h-summary">
+          <h2 id="h-summary">Professional summary</h2>
+          <p>Front-end developer with 4+ years of experience building websites and web apps for small businesses and startups. I focus on semantic HTML, well-organised CSS and measurable performance. I turn designs into interfaces that work on any screen and for any user, and I work closely with designers and backend teams.</p>
+        </section>
+
+        <section class="block c-blue" aria-labelledby="h-exp">
+          <h2 id="h-exp">Work experience</h2>
+          <div class="timeline">
+
+            <article class="item i-blue">
+              <h3>Front-End Developer</h3>
+              <p class="where">Pixel Studio · Remote</p>
+              <span class="date">2023 – Present</span>
+              <ul>
+                <li>Built React and TypeScript interfaces for 6 e-commerce clients.</li>
+                <li>Cut average page load time from 4.2 s to 1.8 s with lazy loading and image optimisation.</li>
+                <li>Created a reusable component library adopted across all team projects, reducing UI development time by 30%.</li>
+              </ul>
+            </article>
+
+            <article class="item i-coral">
+              <h3>Junior Web Developer</h3>
+              <p class="where">Bajío Digital Agency</p>
+              <span class="date">2021 – 2023</span>
+              <ul>
+                <li>Delivered 20+ responsive websites using HTML, CSS and JavaScript.</li>
+                <li>Raised Lighthouse accessibility scores to 95+ on all delivered sites.</li>
+                <li>Collaborated daily with design and backend in an agile team.</li>
+              </ul>
+            </article>
+
+            <article class="item i-amber">
+              <h3>Web Development Intern</h3>
+              <p class="where">Web Solutions MX</p>
+              <span class="date">2020 – 2021</span>
+              <ul>
+                <li>Maintained WordPress sites and built custom page templates.</li>
+              </ul>
+            </article>
+
+          </div>
+        </section>
+
+        <section class="block c-teal" aria-labelledby="h-proj">
+          <h2 id="h-proj">Projects</h2>
+          <div class="projects">
+            <article class="project c-teal">
+              <h3>Local Shop</h3>
+              <p>Product catalogue and shopping cart for a handmade-crafts store, mobile-first with simulated checkout.</p>
+              <p class="stack">React · Tailwind · Vite</p>
+              <a href="#" aria-label="View code for Local Shop">View code</a>
+            </article>
+            <article class="project c-violet">
+              <h3>Weather Board</h3>
+              <p>Dashboard that reads a public API and shows the weekly forecast with interactive charts.</p>
+              <p class="stack">TypeScript · Chart.js · REST API</p>
+              <a href="#" aria-label="View code for Weather Board">View code</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="block c-violet" aria-labelledby="h-edu">
+          <h2 id="h-edu">Education</h2>
+          <div class="timeline">
+            <article class="item i-violet">
+              <h3>B.Sc. in Computer Systems Engineering</h3>
+              <p class="where">Technological Institute</p>
+              <span class="date">2016 – 2020</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="block c-amber certs" aria-labelledby="h-cert">
+          <h2 id="h-cert">Certifications</h2>
+          <ul>
+            <li>Responsive Web Design <span>freeCodeCamp · 2020</span></li>
+            <li>JavaScript Algorithms and Data Structures <span>freeCodeCamp · 2021</span></li>
+            <li>Web Accessibility Fundamentals <span>2023</span></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <footer class="footer">
+      References available upon request. The details in this resume are sample content: replace them with your own.
+    </footer>
+
+  </main>
 </body>
 </html>
